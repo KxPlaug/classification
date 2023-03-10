@@ -37,6 +37,25 @@ else:
 model_fn, weights = architectures[args.arch]
 model = model_fn(weights=weights.DEFAULT).to(device)
 
+if args.dataset == 'cifar100':
+    if args.arch == 'resnet50':
+        model.fc = nn.Linear(2048, 100)
+    elif args.arch == 'vgg16':
+        model.classifier[6] = nn.Linear(4096, 100)
+    elif args.arch == 'efficientnet_b0':
+        model._fc = nn.Linear(1280, 100)
+    elif args.arch == 'densenet201':
+        model.classifier = nn.Linear(1920, 100)
+elif args.dataset == 'cifar10':
+    if args.arch == 'resnet50':
+        model.fc = nn.Linear(2048, 10)
+    elif args.arch == 'vgg16':
+        model.classifier[6] = nn.Linear(4096, 10)
+    elif args.arch == 'efficientnet_b0':
+        model._fc = nn.Linear(1280, 10)
+    elif args.arch == 'densenet201':
+        model.classifier = nn.Linear(1920, 10)
+
 
 # Define the loss function, optimizer and learning rate scheduler
 criterion = nn.CrossEntropyLoss()
