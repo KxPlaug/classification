@@ -99,7 +99,7 @@ for epoch in range(200):
     # Check if the current model is the best so far
     if acc > best_acc:
         print('Saving checkpoint...')
-        torch.save(model.state_dict(), 'weights/best_%s.pth' % args.arch)
+        torch.save(model.state_dict(), 'weights/best_%s_%s.pth' % (args.dataset, args.arch))
         best_acc = acc
         counter = 0
     else:
