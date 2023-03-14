@@ -3,6 +3,7 @@ import torch
 import torch.nn as nn
 import torch.optim as optim
 import torch.utils.data as data
+import os
 from torch.optim.lr_scheduler import ReduceLROnPlateau
 from torchvision.models import resnet50, vgg16, densenet201, efficientnet_b0, ResNet50_Weights, VGG16_Weights, DenseNet201_Weights, EfficientNet_B0_Weights
 from dataset import load_cifar10, load_cifar100
@@ -107,5 +108,5 @@ for epoch in range(200):
         if counter >= patience:
             print('Early stopping...')
             break
-
+os.rename('weights/best_%s_%s.pth' % (args.dataset, args.arch), 'weights/best_%s_%s_%s.pth' % (args.dataset, args.arch, best_acc))
 print('Training finished.')
